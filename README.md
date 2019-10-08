@@ -14,6 +14,10 @@
 
 ## Technology
 
+### [计算机专业知识](./technology/cs.md)
+
 ## Habbits
+
+
 
 ## Philosophy
