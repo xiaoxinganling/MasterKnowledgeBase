@@ -18,6 +18,8 @@
 
 - ###  [数学](./technology/math.md)
 
+- ###  [写作技巧](./technology/writing.md)
+
 ## Habbits
 
 
