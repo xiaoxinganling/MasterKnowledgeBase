@@ -6,3 +6,8 @@
 
   简单来说，coflow 包含很多网络流（flow），coflow 将这些 flow 抽象在一起，并充分利用 flow 包含的application-level semantics 进行更好的性能优化。
 
+## Bigdata Memory
+
+- ### [Yak: A high-performance big-data-friendly garbage collector](./research/conclusion_for_yak.md) 
+
+- ### [An experimental evaluation of garbage collectors on big data applications](./research/An Experimental Evaluation of Garbage Collectors on Big Data Application-summary.md) 
