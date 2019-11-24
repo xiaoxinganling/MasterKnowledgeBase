@@ -27,11 +27,11 @@
 
 ## 有哪些闪光点
 
-- Yak 同时提供了 high throughput 和 low latency，这是 Parallel GC 和 CMS 包含的优点：原因是因为用了新的回收算法；Yak修改了 JIT 编译器（C1 和 Opto），堆布局，以及 Parallel Scavenge（用于回收 CS）。 [^yak change] 对于 Hadoop，Yak 在 setup/cleanup API 中加入 *epoch_start* 和 *epoch_end* annotation（这样可能会导致粒度太粗）。Yak 可以通过 CS 中的对象产生的引用链接访问其他 region 中的对象（CS 属于公共空间）。Yak 的前提是只有一小部分对象是 escaping objects [^escape] 
+- Yak 同时提供了 high throughput 和 low latency，这是 Parallel GC 和 CMS 包含的优点：原因是因为用了新的回收算法；Yak修改了 JIT 编译器（C1 和 Opto），堆布局，以及 Parallel Scavenge（用于回收 CS）。 [^3]   对于 Hadoop，Yak 在 setup/cleanup API 中加入 *epoch_start* 和 *epoch_end* annotation（这样可能会导致粒度太粗）。Yak 可以通过 CS 中的对象产生的引用链接访问其他 region 中的对象（CS 属于公共空间）。Yak 的前提是只有一小部分对象是 escaping objects [^4] 
 
   
 
-- 数据密集型的系统对 control path 和 data path 具有明确的区分。 [^1] **control path** 主要做 cluster management 、schedule、establish communication channels between nodes、interact with users to parse queries and return results；**data path** 主要做 data manipulation functions that can be connected to form a data processing pipeline（data partitioners, Join or Aggregate，用户自定义的函数）
+- 数据密集型的系统对 control path 和 data path 具有明确的区分。 [^1]  **control path** 主要做 cluster management 、schedule、establish communication channels between nodes、interact with users to parse queries and return results；**data path** 主要做 data manipulation functions that can be connected to form a data processing pipeline（data partitioners, Join or Aggregate，用户自定义的函数）
 
   
 
@@ -65,8 +65,8 @@
 
 [^1]: 原文：**data-intensive** system has a clear distinction between a control path and a data path
 [^2]: 原文：Tracing GC traces live objects by following references, starting from a set of root objects that are directly reachable from **live stack variables and global variables**. 
-[^yak change]: 原文：we have modified the two JIT compilers (C1 and Opto), the interpreter, the object/heap layout, and the Parallel Scavenge collector (to manage the CS）
-[^ escape]: 原文：Yak was built based on the assumption that in a typical Big Data system, only a small number of objects escape from the data path to the control path
+[^3]: 原文：we have modified the two JIT compilers (C1 and Opto), the interpreter, the object/heap layout, and the Parallel Scavenge collector (to manage the CS）
+[^4]: 原文：Yak was built based on the assumption that in a typical Big Data system, only a small number of objects escape from the data path to the control path
 
  
 
