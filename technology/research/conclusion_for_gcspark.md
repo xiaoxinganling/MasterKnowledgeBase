@@ -19,7 +19,7 @@
 
 ## 创新点和贡献
 
-​	为了对大数据分析系统和 GC 进行概括，本文选取了 4 种 Spark 大数据分析任务（GroupBy [Spark SQL], Join [Spark SQL], SVM [Machine Learning], PageRank [Graph Computing]）,3 种老年代 GC[^1]（Parallel，CMS，G1）进行实验。根据实验结果，本文得到了几个结论及启发点，这些启发点从不同角度分别为程序员和研究者提供了不同的建议。
+​	为了对大数据分析系统和 GC 进行概括，本文选取了 4 种 Spark 大数据分析任务（GroupBy [Spark SQL], Join [Spark SQL], SVM [Machine Learning], PageRank [Graph Computing]）, 3 种老年代 GC [^1]（Parallel，CMS，G1）进行实验。根据实验结果，本文得到了几个结论及启发点，这些启发点从不同角度分别为程序员和研究者提供了不同的建议。
 
 ## 算法、实现、验证
 
@@ -51,7 +51,7 @@
 ### GC 特征
 
 - 三种老年代 GC 在处理 ***long-lived shuffled data objects*** 和 ***humongous data objects*** 时会出现多次长时间的暂停（问题的关键在此）
-- 并发式 GC [^2]在大数据分析系统中较 STW（stop-the-world）GC[^3] 表现更好，但其对 CPU 资源的需求更大
+- 并发式 GC  [^2]在大数据分析系统中较 STW（stop-the-world）GC [^3] 表现更好，但其对 CPU 资源的需求更大
 
 ### 结论及启发
 
@@ -65,8 +65,16 @@
 
 - 本文提到的 [*SparkProfiler*](https://github.com/JerryLead/SparkProfiler) 为我们后续的 dynamic memory management 提供了实验基础
 -  我们可以将重点放在本文提到的 ***long-lived accumulated objects*** 、 ***cached objects*** 以及 ***humongous objects***上，这些对象具有鲜明的特征，我们可以找出这些对象在何时不会被用到，该信息可以用数据分析框架层（Spark or MonoSpark）告诉我们
-- 在实现 region-based memory management 的过程中，我们需要考虑内存利用率和程序稳定性之间的平衡[^4]
+- 在实现 region-based memory management 的过程中，我们需要考虑内存利用率和程序稳定性之间的平衡 [^4]
 - CMS 和 Parallel 分别使用流处理和批处理任务，我们可以针对任务种类选择不同的 GC 并对其进行优化
+
+
+
+
+
+
+
+
 
 [^1]: 因为老年代 GC 占据了 GC 的大部分时间，因此本文选择老年代 GC 进行研究
 [^2]: 并发式 GC（concurrent GC）：GC 线程在工作时不暂停用户线程，即与用户线程同时工作。其中，CMS 在 mark 和 sweep 阶段都是并发的，而 G1 只在 mark 阶段进行并发操作
