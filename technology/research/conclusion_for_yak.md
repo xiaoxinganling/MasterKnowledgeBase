@@ -27,7 +27,7 @@
 
 ## 有哪些闪光点
 
-- Yak 同时提供了 high throughput 和 low latency，这是 Parallel GC 和 CMS 包含的优点：原因是因为用了新的回收算法；Yak修改了 JIT 编译器（C1 和 Opto），堆布局，以及 Parallel Scavenge（用于回收 CS）。 [^yak change] 对于 Hadoop，Yak 在 setup/cleanup API 中加入 *epoch_start* 和 *epoch_end* annotation（这样可能会导致粒度太粗）
+- Yak 同时提供了 high throughput 和 low latency，这是 Parallel GC 和 CMS 包含的优点：原因是因为用了新的回收算法；Yak修改了 JIT 编译器（C1 和 Opto），堆布局，以及 Parallel Scavenge（用于回收 CS）。 [^yak change] 对于 Hadoop，Yak 在 setup/cleanup API 中加入 *epoch_start* 和 *epoch_end* annotation（这样可能会导致粒度太粗）。Yak 可以通过 CS 中的对象产生的引用链接访问其他 region 中的对象（CS 属于公共空间）。Yak 的前提是只有一小部分对象是 escaping objects [^escape] 
 
   
 
@@ -37,27 +37,15 @@
 
 - 我们在做 young GC 的时候，主要是判断一个对象从 old generation/栈中对象/全局变量 [^2] 是否具有可达性，我们在做 full GC 时会扫描 young/old generation。
 
-  
 
-  
 
-- A card table groups objects into fixed-sized buckets and tracks which buckets contain objects with pointers that point to the young generation
+- 实验：
+  - Evidence shows that in general the heap size needs to be at least twice as large as the minimum memory size for the GC to perform well. 
+  - the cluster is 11-node cluster, each with 2 Xeon(R) CPU E5-2640 v3 processor, 32 GB memory, 1 SSD, running CentOS 6.6, the ration between the sizes of the CS and the DS is 1/10. Besides, we ran each program for three iterations, the frist iteration warmed up the JIT.
+  - We use `pmap` to collect memory consumption periodically.
+  - Hadoop runs multiple JVMs and different JVM instances are frequently created and destroyed. Since the JVM never returns claimed memory back to the OS until it terminates, the memory consumption always grows for Hyracks and GraphChi.
 
-- 因为 CS 上的 object 是共享的，所以我们可以通过 CS 上的 object 的引用链链接到其他 region 当中；
-
-- **Hyracks runs one JVM on each node with many threads to process data while Hadoop runs multiple JVMs on each node, with each JVM using a small number of threads. 
-
-- Evidence shows that in general the heap size needs to be at least twice as large as the minimum memory size for the GC to perform well. 
-
-- the cluster is 11-node cluster, each with 2 Xeon(R) CPU E5-2640 v3 processor, 32 GB memory, 1 SSD, running CentOS 6.6, the ration between the sizes of the CS and the DS is 1/10. Besides, we ran each program for three iterations, the frist iteration warmed up the JIT.
-
-- We use `pmap` to collect memory consumption periodically.
-
-- Hadoop runs multiple JVMs and different JVM instances are frequently created and destroyed. Since the JVM never returns claimed memory back to the OS until it terminates, the memory consumption always grows for Hyracks and GraphChi.
-
-- Yak was built based on the assumption that in a typical Big Data system, only a small number of objects escape from the data path to the control path. 
-
-- The write barrier and region deallocation are the two major sources of Yak’s application overhead.
+  - The write barrier and region deallocation are the two major sources of Yak’s application overhead.
 
 
 
@@ -78,6 +66,7 @@
 [^1]: 原文：**data-intensive** system has a clear distinction between a control path and a data path
 [^2]: 原文：Tracing GC traces live objects by following references, starting from a set of root objects that are directly reachable from **live stack variables and global variables**. 
 [^yak change]: 原文：we have modified the two JIT compilers (C1 and Opto), the interpreter, the object/heap layout, and the Parallel Scavenge collector (to manage the CS）
+[^ escape]: 原文：Yak was built based on the assumption that in a typical Big Data system, only a small number of objects escape from the data path to the control path
 
  
 
