@@ -15,3 +15,7 @@
 - ### [MEMTUNE](./research/memtune_con.md) 
 
 - ### [NG2C](./research/NG2C_con.md) 
+
+- ### [A Bloat-Aware Design for Big Data Applications](./research/bloat-aware_con.md) 
+
+- ### [FACADE: A Compiler and Runtime for(Almost) Object-Bounded Big Data Applications](./research/facade_con.md) 
