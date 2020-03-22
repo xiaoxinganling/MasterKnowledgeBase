@@ -19,5 +19,5 @@
 - ### [A Bloat-Aware Design for Big Data Applications](./research/bloat-aware_con.md) 
 
 - ### [FACADE: A Compiler and Runtime for(Almost) Object-Bounded Big Data Applications](./research/facade_con.md) 
-- ###[Broom: sweeping out Garbage Collector from Big Data Systems](./research/broom_con.md)
-- ###[Dynamic Vertical Memory Scalability for OpenJDK](./research/dynamic_vertical_memory_con.md)
+- [Broom: sweeping out Garbage Collector from Big Data Systems](./research/broom_con.md)
+- [Dynamic Vertical Memory Scalability for OpenJDK](./research/dynamic_vertical_memory_con.md)
