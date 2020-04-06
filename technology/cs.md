@@ -28,7 +28,7 @@
 
 - [Interruptible Tasks: Treating Memory Pressure As Interrupts for Highly Scalable Data-Parallel Programs](./research/itask_con.md)
 
-- [Performance Analysis and Optimization of Full Garbage Collection in Memory-hungry Environments](./fullgc_con.md)
+- [Performance Analysis and Optimization of Full Garbage Collection in Memory-hungry Environments](./research/fullgc_con.md)
 
 ## GC
 
