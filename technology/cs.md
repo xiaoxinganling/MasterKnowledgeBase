@@ -25,3 +25,8 @@
 - [Dynamic Vertical Memory Scalability for OpenJDK](./research/dynamic_vertical_memory_con.md)
 
 - [A Study on Garbage Collection Algorithms for Big Data Environments](./research/BDEGC.md)
+
+- [Interruptible Tasks: Treating Memory Pressure As Interrupts for Highly Scalable Data-Parallel Programs](./research/itask_con.md)
+
+## GC
+
