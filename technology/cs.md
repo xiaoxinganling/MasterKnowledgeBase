@@ -28,8 +28,11 @@
 
 - [Interruptible Tasks: Treating Memory Pressure As Interrupts for Highly Scalable Data-Parallel Programs](./research/itask_con.md)
 
+- [Panthera: Holistic Memory Management for Big Data Processing over Hybrid Memories](./research/Panthera_con.md)
+
 
 ## GC
 
 - [Performance Analysis and Optimization of Full Garbage Collection in Memory-hungry Environments](./research/fullgc_con.md)
 - [Analysis and Optimizations of Java Full Garbage Collection    ](./research/fullGCAnalysisAndOptimization.md)
+
